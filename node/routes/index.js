@@ -8,7 +8,7 @@ exports.save = function(req, res){
   mongoClient.connect(url, function (err, db) {
 
     if (!err){
-      db.collection('email').save({'email': email, 'date': date}, function(er,rs) {
+      db.collection('email').save({'_id': email, 'date': date}, function(er,rs) {
         if(!er){
           res.json({'status':'Success'});
         }
