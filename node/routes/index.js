@@ -13,7 +13,7 @@ StorageRepository.prototype.persist = function(entity, callback){
   mongoClient.connect(url, function (err, db) {
 
     if (!err) {
-      db.collection('email').save({'_id': email, 'date': date}, function(er,rs) {
+      db.collection('email').save({'_id': entity.email, 'date': entity.date}, function(er,rs) {
           return callback(er);
       });
     } else{
@@ -21,11 +21,6 @@ StorageRepository.prototype.persist = function(entity, callback){
     }
   });  
 }
-
-var repo = new StorageRepository();
-
-
-
 
 
 
@@ -40,6 +35,8 @@ exports.save = function(req, res){
   var entity = new Entity();
   entity.date = new Date();
   entity.email = req.params.email;
+
+  var repo = new StorageRepository();
 
   repo.persist(entity, function(err){
     if (!err) {
