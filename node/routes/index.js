@@ -1,8 +1,5 @@
-
-
 var mongo = require('mongodb');
 var url = process.env.MONGOHQ_URL;
-
 
 exports.save = function(req, res){
   var date = new Date();
@@ -11,7 +8,7 @@ exports.save = function(req, res){
 
   mongo.Db.connect(url, function (err, db) {
     db.collection('email', function(er, collection) {
-      collection.insert({$set:{'email': email, 'date': date}}, {safe: true}, function(er,rs) {
+      collection.insert({'email': email, 'date': date}, function(er,rs) {
       });
     });
   });
