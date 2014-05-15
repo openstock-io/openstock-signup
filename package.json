@@ -1,0 +1,18 @@
+{
+  "name": "openstock-signup",
+  "description": "Openstock Signup API",
+  "main": "node/app.js",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node node/app.js"
+  },
+  "engines": {
+    "node": "0.10.25"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "request": "2.33.x",
+    "mongodb": "*"
+  }
+}
