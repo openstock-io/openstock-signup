@@ -1,2 +1,3 @@
-openstock-signup
-================
+# Openstock Signup API
+
+Rest API for storing email addresses
