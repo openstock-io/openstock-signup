@@ -1,20 +1,26 @@
-var mongo = require('mongodb');
+var mongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGOHQ_URL;
 
 exports.save = function(req, res){
   var date = new Date();
-
   var email = req.params.email;
 
-  mongo.Db.connect(url, function (err, db) {
-    db.collection('email', function(er, collection) {
-      collection.insert({'email': email, 'date': date}, function(er,rs) {
+  mongoClient.connect(url, function (err, db) {
+
+    if (!err){
+      db.collection('emal').save({'email': email, 'date': date}, function(er,rs) {
+        if(!er){
+          res.json({'status':'Success'});
+        }
+
+        else{        
+          res.json({'errors':[{'message': 'Database error', 'code':101}]});
+        }
+
       });
-    });
+    }
+    else{
+        res.json({'errors':[{'message': 'Database connection error', 'code':100}]});      
+    }
   });
-
-  res.json({'email':email});
 };
-
-
-
