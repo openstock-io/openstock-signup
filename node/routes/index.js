@@ -10,7 +10,7 @@ exports.save = function(req, res){
     if (!err){
       db.collection('email').save({'_id': email, 'date': date}, function(er,rs) {
         if(!er){
-          res.json({'status':'Success'});
+          res.json({'status':'success'});
         }
 
         else{        
