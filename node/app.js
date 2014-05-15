@@ -12,7 +12,6 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -25,6 +24,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.get('/', routes.index);
 app.get('/save/email/:email', routes.save);
 
 http.createServer(app).listen(app.get('port'), function(){

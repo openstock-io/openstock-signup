@@ -1,26 +1,53 @@
 var mongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGOHQ_URL;
 
-exports.save = function(req, res){
-  var date = new Date();
-  var email = req.params.email;
+function Entity(){}
+function StorageRepository(){}
+
+StorageRepository.prototype.persist = function(entity, callback){
+
+  if(!url){
+    return callback({'error':true});
+  }
 
   mongoClient.connect(url, function (err, db) {
 
-    if (!err){
+    if (!err) {
       db.collection('email').save({'_id': email, 'date': date}, function(er,rs) {
-        if(!er){
-          res.json({'status':'success'});
-        }
-
-        else{        
-          res.json({'errors':[{'message': 'Database error', 'code':101}]});
-        }
-
+          return callback(er);
       });
+    } else{
+        return callback(err);
     }
-    else{
-        res.json({'errors':[{'message': 'Database connection error', 'code':100}]});      
+  });  
+}
+
+var repo = new StorageRepository();
+
+
+
+
+
+
+
+// API
+
+exports.index = function(req, res){
+  res.send('You probably want <a href="http://openstock.io">www.openstock.io</a>');
+};
+
+exports.save = function(req, res){
+  var entity = new Entity();
+  entity.date = new Date();
+  entity.email = req.params.email;
+
+  repo.persist(entity, function(err){
+    if (!err) {
+      res.json({'status':'success'});    
+    } else{
+      res.send(400);    
     }
   });
+
+
 };
