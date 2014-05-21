@@ -1,5 +1,9 @@
+try {
+  var config = require('../config');
+} catch (e) {}
+
 var mongoClient = require('mongodb').MongoClient;
-var url = process.env.MONGOHQ_URL;
+var url = process.env.MONGOHQ_URL || config.MONGOHQ_URL;
 
 function Entity(){}
 function StorageRepository(){}
